@@ -55,7 +55,7 @@ public class SobelFilter {
         int height = original.getHeight();
         Bitmap result = Bitmap.createBitmap(original);
         int colors[] = new int[width*height];
-        original.getPixels(colors,0,0,0,0,width,height);
+        original.getPixels(colors,0,width,0,0,width,height);
         for (int x = 1; x < width - 2; x++) {
             for (int y = 1; y < height - 2; y++) {
                 pixel_x = (sobel_x[0][0] * colors[x*width+(y - 1)]) + (sobel_x[0][1] * colors[2*x*width+(y - 1)]) + (sobel_x[0][2] * colors[3*x*width+(y - 1)]) +
