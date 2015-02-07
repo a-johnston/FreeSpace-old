@@ -19,6 +19,7 @@ public class ColorShader extends Shader {
 	public static float[] ambientCol = new float[]{1f,1f,1f};
 
     public float[] transform;
+    public float[] position;
 	private int sColor;
 
     private static String vertex = "color_vertex";
@@ -113,6 +114,7 @@ public class ColorShader extends Shader {
 				1, false, mvpMatrix, 0);
         GLES20.glUniformMatrix4fv(GLES20.glGetUniformLocation(sColor, "transform"),
                 1, false, transform, 0);
+        GLES20.glUniform3fv(GLES20.glGetUniformLocation(sColor, "translate"), 1, position, 0);
 
 		//draw command
 		GLES20.glDrawElements(

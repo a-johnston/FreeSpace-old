@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.util.Log;
 import android.view.TextureView;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class CameraInput extends TextureView implements TextureView.SurfaceTextu
     }
 
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-
+        Log.i("cam", "AVAILABLE");
         mCamera = Camera.open();
         try {
             mCamera.setPreviewTexture(surface);

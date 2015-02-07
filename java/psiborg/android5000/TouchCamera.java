@@ -1,5 +1,8 @@
 package psiborg.android5000;
 
+import android.os.Debug;
+import android.util.Log;
+
 import psiborg.android5000.base.Camera;
 import psiborg.android5000.base.GameObject;
 import psiborg.android5000.util.Matrix;
@@ -16,21 +19,24 @@ public class TouchCamera extends GameObject {
                 new float[]{3.0f,  3.0f,  3.0f},
                 new float[]{0.0f,  0.0f,  0.0f},
                 new float[]{0.0f,  0.0f,  1.0f},
-                70f,1f,10f);
+                70f,.1f,100f);
         cam.setMain();
     }
     @Override
     public void step() {
-        /*
-        pitch = (float)(Math.max(Math.min(pitch, Math.PI/2-.001),-Math.PI/2+.001));
-        cam.updateLook(new float[]{(float)(Math.cos(yaw)*Math.cos(pitch)*radius),
-                                   (float)(Math.sin(pitch)*radius),
-                                   (float)(Math.sin(yaw)*Math.cos(pitch)*radius)},
-                       new float[]{0,0,0},
+        //Quaternion q = new Quaternion(Sensors.euler.x, Sensors.euler.y, 0.0);
+        //Vector3 up   = q.up().normalized();
+        cam.updateLook(new float[]{0,0,0},
+                       new float[]{(float)(Math.cos(Sensors.euler.x)*Math.cos(Sensors.euler.y)*radius),
+                                   (float)(Math.sin(Sensors.euler.y)*radius),
+                                   (float)(Math.sin(Sensors.euler.x)*Math.cos(Sensors.euler.y)*radius)},
                        new float[]{0,1,0});
-        */
-        Quaternion q = new Quaternion(Sensors.gyro.x, Sensors.gyro.y, Sensors.gyro.z);
-        cam.updateLook(q.forward().mult(-radius), Vector3.zero, q.up());
+        //cam.look = Sensors.rotationMatrix;
+        //cam.updateMVP();
+
+        //Quaternion q = new Quaternion(Sensors.euler.x, Sensors.euler.y, 0.0);
+        //Log.i("l",Sensors.euler.toString());
+        //cam.updateLook(q.forward().normalized().mult(-radius), Vector3.zero, q.up().normalized());
     }
     @Override
     public void unload() {

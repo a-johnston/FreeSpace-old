@@ -19,6 +19,11 @@ public class Matrix {
         m[11] += v.z;
         return this;
     }
+    public static void translate(float[] m, final Vector3 v) {
+        m[3]  += v.x;
+        m[7]  += v.y;
+        m[11] += v.z;
+    }
     public static Matrix lookMatrix(Vector3 from, Vector3 to, Vector3 up) {
         float[] f = new float[16];
         android.opengl.Matrix.setLookAtM(f, 0,
