@@ -26,5 +26,4 @@ public class MotionTracker {
         }
         return null;
     }
-    public static pointExists
 }

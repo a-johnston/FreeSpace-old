@@ -128,4 +128,5 @@ public class Vector3 {
         }
         return r;
     }
+    public
 }
