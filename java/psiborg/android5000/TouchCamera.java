@@ -11,10 +11,14 @@ import psiborg.android5000.util.Vector3;
 import psiborg.freespace.Sensors;
 
 public class TouchCamera extends GameObject {
-    public static float yaw, pitch, radius = 2.5f;
+    public static TouchCamera instance;
+    public double speed;
+    private Vector3 look;
     private Camera cam;
     @Override
     public void load() {
+        instance = this;
+        look = new Vector3();
         cam = new Camera(
                 new float[]{3.0f,  3.0f,  3.0f},
                 new float[]{0.0f,  0.0f,  0.0f},
@@ -24,20 +28,13 @@ public class TouchCamera extends GameObject {
     }
     @Override
     public void step() {
-        //Quaternion q = new Quaternion(Sensors.euler.x, Sensors.euler.y, 0.0);
-        //Vector3 up   = q.up().normalized();
-        //ColorShader.lightDir = new float[]{ (float)(Math.cos(GameEngine.time)*3), 0, (float)(Math.sin(GameEngine.time)*3) };
-        cam.updateLook(new float[]{0,0,0},
-                       new float[]{(float)(Math.cos(Sensors.euler.x)*Math.cos(-Sensors.euler.y)*radius),
-                                   (float)(Math.sin(-Sensors.euler.y)*radius),
-                                   (float)(Math.sin(Sensors.euler.x)*Math.cos(-Sensors.euler.y)*radius)},
+        look.set(Math.cos(Sensors.euler.x)*Math.cos(-Sensors.euler.y), Math.sin(-Sensors.euler.y), Math.sin(Sensors.euler.x)*Math.cos(-Sensors.euler.y));
+        transform.position.add(Vector3.mult(look, speed));
+        cam.updateLook(new float[]{(float)transform.position.x,(float)transform.position.y,(float)transform.position.z},
+                       new float[]{(float)(transform.position.x + look.x),
+                                   (float)(transform.position.y + look.y),
+                                   (float)(transform.position.z + look.z)},
                        new float[]{0,1,0});
-        //cam.look = Sensors.rotationMatrix;
-        //cam.updateMVP();
-
-        //Quaternion q = new Quaternion(Sensors.euler.x, Sensors.euler.y, 0.0);
-        //Log.i("l",Sensors.euler.toString());
-        //cam.updateLook(q.forward().normalized().mult(-radius), Vector3.zero, q.up().normalized());
     }
     @Override
     public void unload() {
