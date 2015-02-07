@@ -24,6 +24,7 @@ public class WorldActivity extends Activity {
         scene.add(new TouchCamera());
         scene.add(new Suzanne());
         render.setScene(scene);
+
     }
 
     @Override

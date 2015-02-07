@@ -1,10 +1,10 @@
 package psiborg.freespace;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
-import android.util.AttributeSet;
-import android.view.TextureView;
 import android.hardware.Camera;
+import android.view.TextureView;
 
 import java.io.IOException;
 
@@ -14,17 +14,20 @@ import java.io.IOException;
 public class CameraInput extends TextureView implements TextureView.SurfaceTextureListener {
     SurfaceTexture mSurfaceTexture;
     Camera mCamera;
+    Bitmap mBitmap;
 
-    public CameraInput(Context context, AttributeSet attributeSet){
-        super(context,attributeSet);
+    public CameraInput(Context context){
+        super(context);
         this.setSurfaceTextureListener(this);
     }
 
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+
         mCamera = Camera.open();
         try {
             mCamera.setPreviewTexture(surface);
             mCamera.startPreview();
+            mBitmap = getBitmap();
         } catch (IOException ioe) {
             System.out.println("Camera Preview Failed :(");
         }
@@ -38,6 +41,7 @@ public class CameraInput extends TextureView implements TextureView.SurfaceTextu
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         mSurfaceTexture = getSurfaceTexture();
+        mBitmap = getBitmap();
     }
 
     @Override
@@ -47,4 +51,7 @@ public class CameraInput extends TextureView implements TextureView.SurfaceTextu
         return true;
     }
 
+    public SurfaceTexture getSurfaceTexture(){
+        return mSurfaceTexture;
+    }
 }
