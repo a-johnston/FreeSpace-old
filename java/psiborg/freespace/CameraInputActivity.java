@@ -1,24 +1,33 @@
 package psiborg.freespace;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.os.Bundle;
 import android.view.TextureView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Joshua on 2/6/2015.
  */
-public class CameraInput extends TextureView implements TextureView.SurfaceTextureListener {
+public class CameraInputActivity extends Activity implements TextureView.SurfaceTextureListener {
     SurfaceTexture mSurfaceTexture;
     Camera mCamera;
     Bitmap mBitmap;
+    TextureView mTextureView;
+    ArrayList<Bitmap> inputImages = new ArrayList<Bitmap>();
+    ArrayList<Bitmap> outputImages = new ArrayList<Bitmap>();
 
-    public CameraInput(Context context){
-        super(context);
-        this.setSurfaceTextureListener(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mTextureView = new TextureView(this);
+        mTextureView.setSurfaceTextureListener(this);
+
+        setContentView(mTextureView);
     }
 
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -27,7 +36,7 @@ public class CameraInput extends TextureView implements TextureView.SurfaceTextu
         try {
             mCamera.setPreviewTexture(surface);
             mCamera.startPreview();
-            mBitmap = getBitmap();
+            mBitmap = mTextureView.getBitmap();
         } catch (IOException ioe) {
             System.out.println("Camera Preview Failed :(");
         }
@@ -35,13 +44,16 @@ public class CameraInput extends TextureView implements TextureView.SurfaceTextu
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
+        //don't need to worry about this
     }
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         mSurfaceTexture = getSurfaceTexture();
-        mBitmap = getBitmap();
+        //inputImages.add(mTextureView.getBitmap());
+        mBitmap = mTextureView.getBitmap();
+        Bitmap sobeled = SobelFilter.fastSobel(mBitmap);
+        //setContentView();
     }
 
     @Override

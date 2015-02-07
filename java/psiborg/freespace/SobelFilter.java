@@ -6,10 +6,10 @@ import android.graphics.Bitmap;
  * Created by Joshua on 2/7/2015.
  */
 public class SobelFilter {
-    public int[][] sobel_y = {{-1,-2,-1},
+    public static int[][] sobel_y = {{-1,-2,-1},
                                 {0,0,0},
                                 {1,2,1}};
-    public int[][] sobel_x = {{-1,0,1},
+    public static int[][] sobel_x = {{-1,0,1},
                                 {-2,0,2},
                                 {-1,0,1}};
 
@@ -18,10 +18,10 @@ public class SobelFilter {
     public int kernal_halfWidth = 1;
     public int kernal_halfHeight = 1;
 
-    public int pixel_x;
-    public int pixel_y;
+    public static int pixel_x;
+    public static int pixel_y;
 
-    public Bitmap applySobel(Bitmap original) {
+    public static Bitmap applySobel(Bitmap original) {
         int width = original.getWidth();
         int height = original.getHeight();
         Bitmap result = Bitmap.createBitmap(original);
@@ -50,7 +50,7 @@ public class SobelFilter {
         return result;
     }
 
-    public Bitmap fastApplySobel(Bitmap original) {
+    public static Bitmap fastSobel(Bitmap original) {
         int width = original.getWidth();
         int height = original.getHeight();
         Bitmap result = Bitmap.createBitmap(original);
