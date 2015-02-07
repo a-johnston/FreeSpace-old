@@ -34,7 +34,6 @@ public class WorldActivity extends Activity {
             scene.add(s);
         }
         render.setScene(scene);
-
     }
 
     @Override
