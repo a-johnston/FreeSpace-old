@@ -107,6 +107,8 @@ public class ColorShader extends Shader {
 		//transform matrix
 		GLES20.glUniformMatrix4fv(GLES20.glGetUniformLocation(sColor, "uMVPMatrix"),
 				1, false, mvpMatrix, 0);
+        //GLES20.glUniformMatrix4fv(GLES20.glGetUniformLocation(sColor, "transform"),
+         //       1, false, Sensors., 0);
 
 		//draw command
 		GLES20.glDrawElements(

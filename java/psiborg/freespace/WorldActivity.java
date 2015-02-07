@@ -16,6 +16,8 @@ public class WorldActivity extends Activity {
         super.onCreate(savedInstanceState);
         render = new Android5000(this);
 
+        Sensors sensors = new Sensors(this);
+
         Scene scene = new Scene();
         scene.add(new TouchCamera());
         scene.add(new Suzanne());

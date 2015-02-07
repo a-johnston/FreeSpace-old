@@ -7,19 +7,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-public class Sensors implements SensorEventListener {
-    private SensorManager man;
+public class Sensors {
+    public static SensorManager man;
     public Sensors(Context context) {
         man  = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         Log.e("sensors", man.toString());
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 }
