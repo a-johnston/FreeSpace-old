@@ -15,25 +15,25 @@ import psiborg.android5000.util.Vector3;
 public class WorldActivity extends Activity {
     Android5000 render;
     Sensors sensors;
-    //CameraInput camin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         render = new Android5000(this);
-        //camin  = new CameraInput(this);
 
         sensors = new Sensors(this);
         sensors.start();
 
         Scene scene = new Scene();
         scene.add(new TouchCamera());
+        scene.add(new FPSCounter(this));
         Random r = new Random();
-        for (int i=0; i<80; i++) {
+        for (int i=0; i<2; i++) {
             Suzanne s = new Suzanne(new Vector3(r.nextDouble()*20-10, r.nextDouble()*20-10, r.nextDouble()*20-10));
             s.transform.rotation.set(r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI).normalize();
             scene.add(s);
         }
         render.setScene(scene);
+
     }
 
     @Override
