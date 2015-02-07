@@ -113,7 +113,6 @@ public class Quaternion {
     public double len2() {
         return x*x+y*y+z*z+w*w;
     }
-    //TODO: ensure the matrix is in correct order
     public void toMatrix (final float[] m) {
         if (m.length != 16) {
             return;

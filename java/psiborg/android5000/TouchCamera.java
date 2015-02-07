@@ -26,7 +26,7 @@ public class TouchCamera extends GameObject {
     public void step() {
         //Quaternion q = new Quaternion(Sensors.euler.x, Sensors.euler.y, 0.0);
         //Vector3 up   = q.up().normalized();
-        ColorShader.lightDir = new float[]{ (float)(Math.cos(GameEngine.time)*3), 0, (float)(Math.sin(GameEngine.time)*3) };
+        //ColorShader.lightDir = new float[]{ (float)(Math.cos(GameEngine.time)*3), 0, (float)(Math.sin(GameEngine.time)*3) };
         cam.updateLook(new float[]{0,0,0},
                        new float[]{(float)(Math.cos(Sensors.euler.x)*Math.cos(-Sensors.euler.y)*radius),
                                    (float)(Math.sin(-Sensors.euler.y)*radius),

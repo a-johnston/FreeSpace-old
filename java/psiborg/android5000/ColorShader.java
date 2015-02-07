@@ -14,9 +14,9 @@ import psiborg.android5000.util.Quaternion;
 import android.opengl.GLES20;
 
 public class ColorShader extends Shader {
-	public static float[] lightDir   = new float[]{-1f,1f,1f};
+	public static float[] lightDir   = new float[]{0f,0f,0f};
 	public static float[] lightCol   = new float[]{1f,1f,1f};
-	public static float[] ambientCol = new float[]{1f,1f,1f};
+	public static float[] ambientCol = new float[]{.2f,.2f,.2f};
 
     public float[] transform;
     public float[] position;

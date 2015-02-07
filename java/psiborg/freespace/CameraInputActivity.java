@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
-<<<<<<< HEAD:java/psiborg/freespace/CameraInputActivity.java
 import android.os.Bundle;
-=======
 import android.util.Log;
->>>>>>> origin/master:java/psiborg/freespace/CameraInput.java
 import android.view.TextureView;
 
 import java.io.IOException;
