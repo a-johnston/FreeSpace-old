@@ -3,6 +3,8 @@ package psiborg.freespace;
 import android.app.Activity;
 import android.os.Bundle;
 
+import java.util.Random;
+
 import psiborg.android5000.Android5000;
 import psiborg.android5000.Suzanne;
 import psiborg.android5000.TouchCamera;
@@ -25,10 +27,12 @@ public class WorldActivity extends Activity {
 
         Scene scene = new Scene();
         scene.add(new TouchCamera());
-        scene.add(new Suzanne(new Vector3(5,0,5)));
-        scene.add(new Suzanne(new Vector3(-5,0,5)));
-        scene.add(new Suzanne(new Vector3(5,0,-5)));
-        scene.add(new Suzanne(new Vector3(-5,0,-5)));
+        Random r = new Random();
+        for (int i=0; i<50; i++) {
+            Suzanne s = new Suzanne(new Vector3(r.nextDouble()*50-25, r.nextDouble()*50-25, r.nextDouble()*50-25));
+            s.transform.rotation.set(r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI);
+            scene.add(s);
+        }
         render.setScene(scene);
 
     }

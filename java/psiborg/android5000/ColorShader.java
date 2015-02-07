@@ -25,10 +25,10 @@ public class ColorShader extends Shader {
     private static String vertex = "color_vertex";
     private static String fragment = "color_fragment";
 
-	private FloatBuffer vertexBuffer;
-	private FloatBuffer normalBuffer;
-	private FloatBuffer colorBuffer;
-	private IntBuffer orderBuffer;
+	private static FloatBuffer vertexBuffer;
+	private static FloatBuffer normalBuffer;
+	private static FloatBuffer colorBuffer;
+	private static IntBuffer orderBuffer;
 	static final byte DIM 	 = 3;
 	static final byte stride = DIM*4;
 	private int mPositionHandle, mNormalHandle, mColorHandle;
