@@ -118,7 +118,7 @@ public class ColorShader extends Shader {
 
 		//draw command
 		GLES20.glDrawElements(
-				GLES20.GL_TRIANGLES, orderBuffer.capacity(),
+				GLES20.GL_POINTS, orderBuffer.capacity(),
 				GLES20.GL_UNSIGNED_INT, orderBuffer);
 		
 		GLES20.glDisableVertexAttribArray(mPositionHandle);

@@ -23,13 +23,13 @@ public class IO {
 			while (s != null) {
 				String[] data = s.split(" ");
 				if (data[0].equals("v") == true) {
-					verts.add(new Vector3(Float.parseFloat(data[1]),
-										  Float.parseFloat(data[2]),
-										  Float.parseFloat(data[3])));
+					verts.add(new Vector3(Double.parseDouble(data[1]),
+                                          Double.parseDouble(data[2]),
+                                          Double.parseDouble(data[3])));
 				} else  if (data[0].equals("c") == true) {
-					cols.add(new Vector3(Float.parseFloat(data[1]),
-										 Float.parseFloat(data[2]),
-										 Float.parseFloat(data[3])));
+					cols.add(new Vector3(Double.parseDouble(data[1]),
+                                         Double.parseDouble(data[2]),
+                                         Double.parseDouble(data[3])));
 				} else  if (data[0].equals("f") == true) {
 					point.add(Integer.parseInt(data[1])-1);
 					point.add(Integer.parseInt(data[2])-1);

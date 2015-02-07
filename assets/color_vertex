@@ -16,5 +16,6 @@ void main() {
 	p_color = v_Color;
 	p_normal = vec3(transform * v_Normal);
 	p_dist = lightPos - vec3(v_Position);
+	gl_PointSize = 5.0;
 	gl_Position = uMVPMatrix * ((transform * v_Position) + translate);
 }
