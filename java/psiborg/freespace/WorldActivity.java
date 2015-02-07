@@ -28,9 +28,9 @@ public class WorldActivity extends Activity {
         Scene scene = new Scene();
         scene.add(new TouchCamera());
         Random r = new Random();
-        for (int i=0; i<50; i++) {
-            Suzanne s = new Suzanne(new Vector3(r.nextDouble()*50-25, r.nextDouble()*50-25, r.nextDouble()*50-25));
-            s.transform.rotation.set(r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI);
+        for (int i=0; i<80; i++) {
+            Suzanne s = new Suzanne(new Vector3(r.nextDouble()*20-10, r.nextDouble()*20-10, r.nextDouble()*20-10));
+            s.transform.rotation.set(r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI).normalize();
             scene.add(s);
         }
         render.setScene(scene);

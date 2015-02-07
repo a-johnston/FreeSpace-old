@@ -16,12 +16,14 @@ public class Suzanne extends GameObject {
     public Vector3 pos;
     public Suzanne(Vector3 pos) {
         this.pos = pos;
-        this.rotation = new Quaternion();
+        this.rotation = new Quaternion(.1,0,0);
     }
     @Override
     public void load() {
-        if (obj == null) obj = IO.loadObj("suzanne.obj");
-        Log.i("mesh", obj.points.length+"!");
+        if (obj == null) {
+            obj = IO.loadObj("suzanne.obj");
+            Log.i("polys", obj.order.length*80/3 + "!");
+        }
         color = new ColorShader(obj);
         shader = color;
         color.position = this.pos.toFloatArray();
