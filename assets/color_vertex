@@ -13,7 +13,7 @@ varying vec3 p_dist;
 
 void main() {
 	p_color = v_Color;
-	p_normal = vec3(v_Normal);
+	p_normal = vec3(transform * v_Normal);
 	p_dist = lightPos - vec3(v_Position);
-	gl_Position = uMVPMatrix * v_Position;
+	gl_Position = uMVPMatrix * transform * v_Position;
 }

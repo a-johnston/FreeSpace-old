@@ -131,6 +131,11 @@ public class Quaternion {
         m[14] = 0;
         m[15] = 1;
     }
+    public static float[] getNewMatrix(Quaternion q) {
+        float[] m = new float[16];
+        q.toMatrix(m);
+        return m;
+    }
     public Vector3 transform(Vector3 v) {
         Quaternion q1 = (new Quaternion(this)).conjugate();
         Quaternion q2 = new Quaternion(v);

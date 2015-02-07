@@ -5,9 +5,11 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import psiborg.android5000.base.GameObject;
 import psiborg.android5000.base.Shader;
 import psiborg.android5000.util.IO;
 import psiborg.android5000.util.MeshData;
+import psiborg.android5000.util.Quaternion;
 
 import android.opengl.GLES20;
 
@@ -15,7 +17,8 @@ public class ColorShader extends Shader {
 	public static float[] lightDir   = new float[]{-1f,1f,1f};
 	public static float[] lightCol   = new float[]{1f,1f,1f};
 	public static float[] ambientCol = new float[]{1f,1f,1f};
-	
+
+    public float[] transform;
 	private int sColor;
 
     private static String vertex = "color_vertex";
@@ -30,7 +33,8 @@ public class ColorShader extends Shader {
 	private int mPositionHandle, mNormalHandle, mColorHandle;
 	public ColorShader(MeshData mesh) {
 		sColor = instance(IO.readFile(vertex), IO.readFile(fragment));
-		
+		transform = Quaternion.getNewMatrix(Quaternion.identity);
+
 		//add coordinates to buffer
 		ByteBuffer bb = ByteBuffer.allocateDirect(mesh.points.length*4);
 		bb.order(ByteOrder.nativeOrder());
@@ -107,8 +111,8 @@ public class ColorShader extends Shader {
 		//transform matrix
 		GLES20.glUniformMatrix4fv(GLES20.glGetUniformLocation(sColor, "uMVPMatrix"),
 				1, false, mvpMatrix, 0);
-        //GLES20.glUniformMatrix4fv(GLES20.glGetUniformLocation(sColor, "transform"),
-         //       1, false, Sensors., 0);
+        GLES20.glUniformMatrix4fv(GLES20.glGetUniformLocation(sColor, "transform"),
+                1, false, transform, 0);
 
 		//draw command
 		GLES20.glDrawElements(
