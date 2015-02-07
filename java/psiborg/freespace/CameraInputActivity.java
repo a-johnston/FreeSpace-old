@@ -4,8 +4,15 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.util.Log;
+=======
+
+import android.os.Bundle;
+import android.util.Log;
+
+>>>>>>> 3d9246b623d44407479a629200a0dd8af64d9892
 import android.view.TextureView;
 
 import java.io.IOException;
