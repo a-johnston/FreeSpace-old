@@ -15,12 +15,12 @@ import psiborg.android5000.util.Vector3;
 public class WorldActivity extends Activity {
     Android5000 render;
     Sensors sensors;
-    CameraInput camin;
+    //CameraInput camin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         render = new Android5000(this);
-        camin  = new CameraInput(this);
+        //camin  = new CameraInput(this);
 
         sensors = new Sensors(this);
         sensors.start();
