@@ -8,7 +8,7 @@ import psiborg.android5000.util.Vector3;
 
 public class Suzanne extends GameObject {
     public static float yaw, pitch, radius = 2.5f;
-    public static Quaternion rotation = new Quaternion(new Vector3(1,.5,0).normalized(), .1);
+    public static Quaternion rotation = new Quaternion(new Vector3(0,0,0).normalized(), .1);
     private ColorShader color;
     @Override
     public void load() {

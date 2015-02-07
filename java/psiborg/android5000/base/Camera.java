@@ -40,6 +40,13 @@ public class Camera {
     public void setMain() {
         active = this;
     }
+    public void updateLook(Vector3 from, Vector3 to, Vector3 up) {
+        this.from.set(from);
+        this.to.set(to);
+        this.up.set(up);
+        updateLook();
+        updateMVP();
+    }
 	public void updateLook(float[] from, float[] to, float[] up) {
         this.from.set(from);
         this.to.set(to);

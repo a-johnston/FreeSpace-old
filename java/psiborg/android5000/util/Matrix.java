@@ -27,4 +27,13 @@ public class Matrix {
                 (float) up.x,   (float) up.y,   (float) up.z);
         return new Matrix(f);
     }
+    public static void lookMatrix(float[] a, Vector3 from, Vector3 to, Vector3 up) {
+        android.opengl.Matrix.setLookAtM(a, 0,
+                (float) from.x, (float) from.y, (float) from.z,
+                (float) to.x,   (float) to.y,   (float) to.z,
+                (float) up.x,   (float) up.y,   (float) up.z);
+    }
+    public float[] getArray() {
+        return m;
+    }
 }

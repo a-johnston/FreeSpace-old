@@ -14,6 +14,7 @@ public class Quaternion {
     public Quaternion(final Quaternion q) { set(q); }
     public Quaternion(final Vector3 v) { set(v.x, v.y, v.z, 0); }
     public Quaternion(final Vector3 axis, final double angle) { set(axis, angle); }
+    public Quaternion(final double yaw, final double pitch, final double roll) { set(yaw, pitch, roll); }
     public Quaternion set(final double x, final double y, final double z, final double w) {
         this.x = x;
         this.y = y;
@@ -88,6 +89,23 @@ public class Quaternion {
     public static Quaternion mult(final Quaternion a, final Quaternion b) {
         Quaternion t = new Quaternion(a);
         return t.mult(b);
+    }
+    public Vector3 forward() {
+        return new Vector3( 2 * (x * z + w * y),
+                            2 * (y * x - w * x),
+                            1 - 2 * (x * x + y * y));
+    }
+
+    public Vector3 up() {
+        return new Vector3( 2 * (x * y - w * z),
+                            1 - 2 * (x * x + z * z),
+                            2 * (y * z + w * x));
+    }
+
+    public Vector3 right() {
+        return new Vector3( 1 - 2 * (y * y + z * z),
+                            2 * (x * y + w * z),
+                            2 * (x * z - w * y));
     }
     public double len() {
         return (float)Math.sqrt(len2());

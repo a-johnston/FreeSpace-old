@@ -82,6 +82,10 @@ public class Vector3 {
         }
         return this;
     }
+    public Vector3 lerp(Vector3 v, double a) {
+        mult(1-a).add(Vector3.mult(v,a));
+        return this;
+    }
     public double dot(final Vector3 v) {
         return this.x*v.x+this.y*v.y+this.z*v.z;
     }

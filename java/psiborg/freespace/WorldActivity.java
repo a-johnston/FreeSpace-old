@@ -11,12 +11,14 @@ import psiborg.android5000.base.Scene;
 
 public class WorldActivity extends Activity {
     Android5000 render;
+    Sensors sensors;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         render = new Android5000(this);
 
-        Sensors sensors = new Sensors(this);
+        sensors = new Sensors(this);
+        sensors.start();
 
         Scene scene = new Scene();
         scene.add(new TouchCamera());
@@ -24,5 +26,15 @@ public class WorldActivity extends Activity {
         render.setScene(scene);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensors.start();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        sensors.start();
+    }
 }
