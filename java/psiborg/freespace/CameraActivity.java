@@ -16,6 +16,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
     private TextureView mTextureView;
     private Bitmap mBitmap;
     private Bitmap sobel;
+    private Bitmap compareSobel;
     //private CameraActivity.RenderingThread mThread;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
         mTextureView.setRotation(90.0f);
         mBitmap = mTextureView.getBitmap();
         sobel = SobelFilter.fastSobel(mBitmap);
+        compareSobel = SobelFilter.applySobel(mBitmap);
+        mBitmap = mTextureView.getBitmap();
     }
 
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
