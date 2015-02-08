@@ -22,14 +22,14 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FrameLayout content = new FrameLayout(this);
+        //FrameLayout content = new FrameLayout(this);
 
         mTextureView = new TextureView(this);
         mTextureView.setSurfaceTextureListener(this);
 
 
-        content.addView(mTextureView, new FrameLayout.LayoutParams(500, 500, Gravity.CENTER));
-        setContentView(content);
+        //content.addView(mTextureView, new FrameLayout.LayoutParams(500, 500, Gravity.CENTER));
+        setContentView(mTextureView);
     }
 
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -40,17 +40,15 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
         try {
             mCamera.setPreviewTexture(surface);
             mCamera.startPreview();
-
-            mBitmap = mTextureView.getBitmap();
         } catch (IOException ioe) {
             // Something bad happened
         }
         mTextureView.setAlpha(1.0f);
         mTextureView.setRotation(90.0f);
-        mBitmap = mTextureView.getBitmap();
-        sobel = SobelFilter.fastSobel(mBitmap);
-        compareSobel = SobelFilter.applySobel(mBitmap);
-        mBitmap = mTextureView.getBitmap();
+        //mBitmap = mTextureView.getBitmap();
+        //sobel = SobelFilter.fastSobel(mBitmap);
+        //compareSobel = SobelFilter.applySobel(mBitmap);
+
     }
 
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
@@ -67,7 +65,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
         //mSurfaceTexture = mTextureView.getSurfaceTexture();
         //inputImages.add(mTextureView.getBitmap());
         mBitmap = mTextureView.getBitmap();
-        sobel = SobelFilter.fastSobel(mBitmap);
+        sobel = SobelFilter.fastestSobel(mBitmap);
 
     }
 
