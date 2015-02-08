@@ -39,6 +39,7 @@ public class WorldActivity extends Activity {
             Cluster c = new Cluster(new Vector3(r.nextDouble()*20-10, r.nextDouble()*20-10, r.nextDouble()*20-10));
             c.addPoints(makeRandomBlobs(500, 10));
             scene.add(c);
+
         }
         Log.i("load", "end pointcloud load");
         render.setScene(scene);
