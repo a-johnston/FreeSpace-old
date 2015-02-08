@@ -51,10 +51,10 @@ public class SobelFilter {
     }
 
     public static Bitmap fastSobel(Bitmap original) {
-        int width = 5;//original.getWidth();
-        int height = 5;//original.getHeight();
+        int width = original.getWidth();
+        int height = original.getHeight();
         Bitmap result = Bitmap.createBitmap(original);
-        int colors[] = new int[5*5];//width*height];
+        int colors[] = new int[width*height];
         //int resultColors[] = new int[width*height-2*width+2*height];
         original.getPixels(colors,0,width,0,0,width,height);
         for (int x = 1; x < width - 2; x++) {

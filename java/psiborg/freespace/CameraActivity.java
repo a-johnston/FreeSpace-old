@@ -12,18 +12,23 @@ import android.widget.FrameLayout;
 import java.io.IOException;
 
 public class CameraActivity extends Activity implements TextureView.SurfaceTextureListener {
-    private Camera mCamera;
+    public Camera mCamera;
     private TextureView mTextureView;
     private Bitmap mBitmap;
-    private SurfaceTexture mSurfaceTexture;
+    private Bitmap sobel;
+    //private CameraActivity.RenderingThread mThread;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FrameLayout content = new FrameLayout(this);
+
         mTextureView = new TextureView(this);
         mTextureView.setSurfaceTextureListener(this);
 
-        setContentView(mTextureView);
+
+        content.addView(mTextureView, new FrameLayout.LayoutParams(500, 500, Gravity.CENTER));
+        setContentView(content);
     }
 
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -41,6 +46,8 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
         }
         mTextureView.setAlpha(1.0f);
         mTextureView.setRotation(90.0f);
+        mBitmap = mTextureView.getBitmap();
+        sobel = SobelFilter.fastSobel(mBitmap);
     }
 
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
@@ -57,111 +64,69 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
         //mSurfaceTexture = mTextureView.getSurfaceTexture();
         //inputImages.add(mTextureView.getBitmap());
         mBitmap = mTextureView.getBitmap();
-        Bitmap sobeled = SobelFilter.fastSobel(mBitmap);
+        sobel = SobelFilter.fastSobel(mBitmap);
 
     }
-}
 
-/*
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.TextureView;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-
-public class CameraActivity extends Activity implements TextureView.SurfaceTextureListener {
-    SurfaceTexture mSurfaceTexture;
-    Camera mCamera;
-    Bitmap mBitmap;
-    TextureView mTextureView;
-    ArrayList<Bitmap> inputImages = new ArrayList<Bitmap>();
-    ArrayList<Bitmap> outputImages = new ArrayList<Bitmap>();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mTextureView = new TextureView(this);
-        mTextureView.setSurfaceTextureListener(this);
-
-        setContentView(mTextureView);
+    public Bitmap getSobel(){
+        return sobel;
     }
 
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        Log.i("cam", "AVAILABLE");
-        mCamera = Camera.open();
-        try {
-            mCamera.setPreviewTexture(surface);
-            mCamera.startPreview();
-            mBitmap = mTextureView.getBitmap();
-        } catch (IOException ioe) {
-            System.out.println("Camera Preview Failed :(");
+    /*
+    private static class RenderingThread extends Thread {
+        private final TextureView mSurface;
+        private volatile boolean mRunning = true;
+        private CameraActivity mCamera;
+
+        public RenderingThread(TextureView surface,CameraActivity camera) {
+            mSurface = surface;
+            mCamera = camera;
+
         }
-    }
 
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-        //don't need to worry about this
-    }
+        @Override
+        public void run() {
+            float x = 0.0f;
+            float y = 0.0f;
+            float speedX = 5.0f;
+            float speedY = 3.0f;
 
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        mSurfaceTexture = getSurfaceTexture();
-        //inputImages.add(mTextureView.getBitmap());
-        mBitmap = mTextureView.getBitmap();
-        Bitmap sobeled = SobelFilter.fastSobel(mBitmap);
-        //setContentView();
-    }
+            Paint paint = new Paint();
+            paint.setColor(0xff00ff00);
 
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        mCamera.stopPreview();
-        mCamera.release();
-        return true;
-    }
+            while (mRunning && !Thread.interrupted()) {
+                final Canvas canvas = mSurface.lockCanvas(null);
+                RectF dst = new RectF(0,0,mCamera.mCamera.getParameters().getPreviewSize().width,mCamera.mCamera.getParameters().getPreviewSize().height);
+                try {
+                //    canvas.drawBitmap(mCamera.getSobel(),null,dst,null);
+                } catch(NullPointerException e){
 
-    public SurfaceTexture getSurfaceTexture() {
-        return mSurfaceTexture;
-    }
+                }
+                finally {
+                    mSurface.unlockCanvasAndPost(canvas);
+                }
 
+                if (x + 20.0f + speedX >= mSurface.getWidth() || x + speedX <= 0.0f) {
+                    speedX = -speedX;
+                }
+                if (y + 20.0f + speedY >= mSurface.getHeight() || y + speedY <= 0.0f) {
+                    speedY = -speedY;
+                }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.camera, menu);
-        return true;
-    }
+                x += speedX;
+                y += speedY;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+                try {
+                    Thread.sleep(15);
+                } catch (InterruptedException e) {
+                    // Interrupted
+                }
+            }
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
-    protected void onStop() {
-
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-    }
+        void stopRendering() {
+            interrupt();
+            mRunning = false;
+        }
+    }*/
 }
-*/
