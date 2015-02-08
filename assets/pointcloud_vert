@@ -1,5 +1,8 @@
-attribute vec4 a_vertex;
+uniform mat4 matrix;
+uniform vec4 translate;
 
-void main(void) {
-    gl_Position = a_vertex;
+attribute vec4 position;
+
+void main() {
+    gl_Position = matrix*(position+translate);
 }

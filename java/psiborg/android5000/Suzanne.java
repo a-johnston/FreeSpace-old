@@ -22,7 +22,6 @@ public class Suzanne extends GameObject {
     public void load() {
         if (obj == null) {
             obj = IO.loadObj("suzanne.obj");
-            Log.i("polys", obj.order.length*80/3 + "!");
         }
         color = new ColorShader(obj);
         shader = color;

@@ -28,7 +28,7 @@ public abstract class Shader implements Drawable {
     private static void checkError(String message) {
         if (GLES20.glGetError() != GLES20.GL_NO_ERROR) {
             Log.e("INSTANCE", message + " " + GLES20.glGetError());
-            throw new ArrayIndexOutOfBoundsException();
+            //throw new ArrayIndexOutOfBoundsException();
         }
     }
 }

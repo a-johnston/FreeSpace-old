@@ -21,10 +21,9 @@ public class Cluster extends GameObject {
     }
     public void load() {
         active = true;
-        s = new PointCloudShader(new float[]{1.0f,1.0f,1.0f,1.0f});
+        s = new PointCloudShader(new float[]{1.0f,1.0f,1.0f,1.0f}, buildCloud());
         shader = s;
         unifiedChangePosition(transform.position);
-        updateCloud();
     }
     public void unload() {
         active = false;
@@ -44,7 +43,7 @@ public class Cluster extends GameObject {
         this.transform.position.set(pos);
         s.updatePosition(pos);
     }
-    private void updateCloud() {
+    private float[] buildCloud() {
         float[] data = new float[blobs.size()*3];
         int i = 0;
         for (Blob b : blobs) {
@@ -53,7 +52,7 @@ public class Cluster extends GameObject {
             data[i*3+2] = (float)b.worldPos.z;
             i++;
         }
-        s.updateBuffer(data);
+        return data;
     }
     private Blob[] toBlobs() {
         Blob[] r = new Blob[blobs.size()];
