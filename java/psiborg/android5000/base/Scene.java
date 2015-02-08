@@ -1,8 +1,10 @@
 package psiborg.android5000.base;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Scene {
+    public static LinkedList<GameObject> queue = new LinkedList<GameObject>();
     private boolean loaded;
     private LinkedList<GameObject> list;
     public Scene() {
@@ -33,6 +35,9 @@ public class Scene {
         loaded = false;
     }
     public void step() {
+        while (!queue.isEmpty()) {
+            this.add(queue.remove());
+        }
         for (GameObject o : list) {
             o.step();
         }
@@ -40,8 +45,11 @@ public class Scene {
     public void draw(float[] mvp) {
         for (GameObject o : list) {
             if (o.shader != null) {
-                o.shader.draw(mvp);
+                o.draw(mvp);
             }
         }
+    }
+    public static void newInstance(GameObject o) {
+        queue.add(o);
     }
 }

@@ -11,6 +11,7 @@ import psiborg.android5000.Android5000;
 import psiborg.android5000.Suzanne;
 import psiborg.android5000.TouchCamera;
 import psiborg.android5000.base.Scene;
+import psiborg.android5000.util.Quaternion;
 import psiborg.android5000.util.Vector3;
 
 
@@ -19,7 +20,6 @@ public class WorldActivity extends Activity {
     Sensors sensors;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("load", "DOES THIS RUN");
         super.onCreate(savedInstanceState);
         render = new Android5000(this);
 
@@ -29,20 +29,13 @@ public class WorldActivity extends Activity {
         Scene scene = new Scene();
         scene.add(new TouchCamera());
         scene.add(new FPSCounter(this));
-        Random r = new Random();
-        Log.i("load", "start pointcloud load");
-        for (int i=0; i<10; i++) {
-
-            //Suzanne s = new Suzanne(new Vector3(r.nextDouble()*20-10, r.nextDouble()*20-10, r.nextDouble()*20-10));
-            //s.transform.rotation.set(r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI).normalize();
-            //scene.add(s);
-
-            Cluster c = new Cluster(new Vector3(r.nextDouble()*20-10, r.nextDouble()*20-10, r.nextDouble()*20-10));
-            c.addPoints(makeRandomBlobs(100, 10));
-            scene.add(c);
-
-        }
-        Log.i("load", "end pointcloud load");
+        scene.add(new Cluster());
+//        Random r = new Random();
+//        for (int i=0; i<100; i++) {
+//            Suzanne s = new Suzanne(new Vector3(r.nextDouble()*20-10, r.nextDouble()*20-10, r.nextDouble()*20-10));
+//            s.transform.rotation.set(r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI, r.nextDouble()*2*Math.PI).normalize();
+//            scene.add(s);
+//        }
         render.setScene(scene);
 
     }

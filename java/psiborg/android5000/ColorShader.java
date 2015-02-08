@@ -37,30 +37,30 @@ public class ColorShader extends Shader {
 		transform = Quaternion.getNewMatrix(Quaternion.identity);
 
 		//add coordinates to buffer
-		ByteBuffer bb = ByteBuffer.allocateDirect(mesh.points.length*4);
+		ByteBuffer bb = ByteBuffer.allocateDirect(mesh.points.size()*12);
 		bb.order(ByteOrder.nativeOrder());
 		vertexBuffer = bb.asFloatBuffer();
-		vertexBuffer.put(mesh.points);
+		vertexBuffer.put(mesh.getPoints());
 		vertexBuffer.position(0);
 		
 		//add normal vectors to buffer
-		ByteBuffer nb = ByteBuffer.allocateDirect(mesh.normals.length*4);
+		ByteBuffer nb = ByteBuffer.allocateDirect(mesh.normals.size()*12);
 		nb.order(ByteOrder.nativeOrder());
 		normalBuffer = nb.asFloatBuffer();
-		normalBuffer.put(mesh.normals);
+		normalBuffer.put(mesh.getNormals());
 		normalBuffer.position(0);
 		
 		//add color data to buffer
-		ByteBuffer cb = ByteBuffer.allocateDirect(mesh.color.length*4);
+		ByteBuffer cb = ByteBuffer.allocateDirect(mesh.color.size()*12);
 		cb.order(ByteOrder.nativeOrder());
 		colorBuffer = cb.asFloatBuffer();
-		colorBuffer.put(mesh.color);
+		colorBuffer.put(mesh.getColor());
 		colorBuffer.position(0);
 
-		bb = ByteBuffer.allocateDirect(mesh.order.length*4);
+		bb = ByteBuffer.allocateDirect(mesh.order.size()*4);
 		bb.order(ByteOrder.nativeOrder());
 		orderBuffer = bb.asIntBuffer();
-		orderBuffer.put(mesh.order);
+		orderBuffer.put(mesh.getOrder());
 		orderBuffer.position(0);
 		
 		mPositionHandle = GLES20.glGetAttribLocation(sColor, "v_Position");
@@ -118,11 +118,14 @@ public class ColorShader extends Shader {
 
 		//draw command
 		GLES20.glDrawElements(
-				GLES20.GL_POINTS, orderBuffer.capacity(),
+				GLES20.GL_TRIANGLES, orderBuffer.capacity(),
 				GLES20.GL_UNSIGNED_INT, orderBuffer);
 		
 		GLES20.glDisableVertexAttribArray(mPositionHandle);
 		GLES20.glDisableVertexAttribArray(mNormalHandle);
 		GLES20.glDisableVertexAttribArray(mColorHandle);
 	}
+    public void destroy() {
+        GLES20.glDeleteProgram(sColor);
+    }
 }
